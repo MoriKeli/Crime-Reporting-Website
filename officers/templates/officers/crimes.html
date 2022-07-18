@@ -1,0 +1,54 @@
+{% extends 'officers/base.html' %}{% block title %}Reported Crimes{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    {% block content %}
+    <main class="main" id="main">
+        <section class="section dashboard">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card pt-3">
+                        <div class="card-body table-responsive">
+                            <table class="table table-bordered table-condensed table-hover">
+                                <thead>
+                                    <tr class="table-active">
+                                        <th scope="col">#</th>
+                                        <th scope="col">Crime</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Location</th>
+                                        <th scope="col">Date of Crime</th>
+                                        <th scope="col">Reported</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Updated</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for crime in reported_crimes %}
+                                    <tr>
+                                        <td scope="row"><a href="{% url 'case_file' crime.case_file_no crime.suspect_name %}">{{forloop.counter}}</a></td>
+                                        <td>{% if crime.crime_status is not None %}<a href="{% url 'file_reported_crime' crime.case_file_no crime.suspect_name %}">{{crime.type_of_crime}}</a>{% else %}{{crime.type_of_crime}}{% endif %}</td>
+                                        <td><h6>{{crime.description|truncatewords:7}}</h6></td>
+                                        <td>{{crime.location}}</td>
+                                        <td>{{crime.date_of_crime}}</td>
+                                        <td>{{crime.crime_reported|timesince}} ago</td>
+                                        <td>{% if crime.crime_status == 'File Case' %}<span class="badge bg-info">Case Filed</span>{% elif crime.crime_status == 'Police carrying out investigation' %}<span class="badge bg-primary">Investigation</span>{% elif crime.crime_status == 'Suspect(s) Arrested' %}<span class="badge bg-warning">Arrested</span>{% elif crime.crime_status == 'Suspect(s) Interrogated' %}<span class="badge bg-success">Interrogating</span>{% elif crime.crime_status == 'Suspect(s) Sentenced' %}<span class="badge bg-primary">Jailed</span>{% elif crime.crime_status %}<span class="badge bg-danger">Case closed</span>{% endif %}</td>
+                                        <td>{{crime.status_updated}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,76 @@
+{% extends 'users/base.html' %}{% block title %}Create account{% endblock %}
+{% load crispy_forms_tags %}{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    {% block content %}
+    <style>
+        .hero {
+            width: 100%;
+            min-height: 100vh;
+            background: url("{% static 'img/town3.jpg' %}") top center;
+            background-size: cover;
+            position: relative;
+            padding: 120px 0;
+            z-index: 3;
+        }
+    </style>
+    <section id="hero" class="hero d-flex align-items-center">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-4">
+					<h2 data-aos="fade-up">Get Registered</h2>
+					<blockquote data-aos="fade-up" data-aos-delay="100">
+						<p>
+                            The following details will be collected for account registration:
+                            <ul>
+                                <li>First name and surname</li>
+                                <li>Gender</li>
+                                <li>Phone Number - for password reset</li>
+                                <li>Email Address</li>
+                            </ul>
+                            Scroll to create account <i class="bi bi-arrow-down-circle-fill" style="font-size: 20px; color: #56b8e6"></i>
+                        </p>
+					</blockquote>
+                    
+				</div>
+			</div>
+		</div>
+	</section>
+    <div class="form-container container">
+        <div class="row">
+            <div class="col-md-6 offset-sm-3">
+                <form action="" method="post" class="card card-body mt-5 p-3">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <h5>Create Account Form</h5><hr>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% include 'messages.html' %}{{form|crispy}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 d-grid gap-2">
+                            <button type="submit" class="btn btn-success mt-2">Create account</button><hr>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h6 class="text-center">Already have an account? <a href="{% url 'user_login' %}">Login</a></h6>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

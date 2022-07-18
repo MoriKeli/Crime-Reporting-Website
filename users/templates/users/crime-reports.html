@@ -1,0 +1,111 @@
+{% extends 'users/base.html' %}{% block title %}Reported Crimes{% endblock %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+</head>
+<body class="page-blog">
+	{% block content %}
+	<main id="main">
+		<div class="breadcrumbs d-flex align-items-center" style="background-image: url('assets/img/blog-header.jpg');">
+			<div class="container position-relative d-flex flex-column align-items-center">
+				<h2>Reported Crimes</h2>
+				<ol>
+					<li><a href="{% url 'user_homepage' user.username %}">Home</a></li>
+					<li>Reported Crimes</li>
+				</ol>
+			</div>
+		</div>
+		
+		<section id="blog" class="blog">
+			<div class="container" data-aos="fade-up">
+				<div class="row g-5">
+					<div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+						<div class="row gy-5 posts-list">
+							{% for report in crimes_reported reversed %}
+							<div class="col-lg-6">
+								<article class="d-flex flex-column">
+									<div class="post-img">
+										{% if report.type_of_crime == 'Burglary' or report.type_of_crime == 'Robbery' %}
+										<img src="{% static 'img/banners/robbery.jpg' %}" class="img-fluid" alt="crime-img">
+										{% elif report.type_of_crime == 'Theft' %}
+										<img src="{% static 'img/banners/thief.jpg' %}" class="img-fluid" alt="crime-img">
+										{% elif report.type_of_crime == 'Selling Drugs' %}
+										<img src="{% static 'img/banners/stop-drugs.jpg' %}" class="img-fluid" alt="crime-img">
+										{% else %}
+										<img src="{% static 'img/banners/shield.jpg' %}" class="img-fluid" alt="crime-img">
+										{% endif %}
+									</div>
+
+									<h2 class="title">
+										<a href="{% url 'crime_details' report.case_file_no %}">{{report.type_of_crime}}</a>
+									</h2>
+
+									<div class="meta-top">
+										<ul>
+										<li class="d-flex align-items-center"><i class="bi bi-person-x"></i> {{report.suspect_name}}</a></li>
+										<li class="d-flex align-items-center"><i class="bi bi-clock"></i> {{report.crime_reported|timesince}} ago</li>
+										<li class="d-flex align-items-center"><i class="bi bi-globe"></i> {{report.location}}</li>
+										</ul>
+									</div>
+
+									<div class="content">
+										<p>{{report.description|truncatewords:17}}</p>
+									</div>
+
+									<div class="read-more mt-auto align-self-end">
+										<a href="{% url 'crime_details' report.case_file_no %}">Read More <i class="bi bi-arrow-right"></i></a>
+									</div>
+								</article>
+							</div>
+							{% endfor %}
+						</div>
+
+					</div>
+
+					<div class="col-lg-4" data-aos="fade-up" data-aos-delay="400">
+						<div class="sidebar ps-lg-4">
+							<div class="sidebar-item search-form">
+								<h3 class="sidebar-title">Search</h3>
+								<form action="" class="mt-3" method="get">
+									<input type="text">
+									<button type="submit"><i class="bi bi-search"></i></button>
+								</form>
+							</div>
+
+							<div class="sidebar-item recent-posts">
+								<h3 class="sidebar-title">Recent Posts</h3>
+								<div class="mt-3">
+									{% for recent in crime_report_updates reversed %}
+									<div class="post-item mt-3">
+										{% if recent.type_of_crime == 'Burglary' or recent.type_of_crime == 'Robbery' %}
+										<img src="{% static 'img/banners/robbery.jpg' %}" class="img-fluid" alt="crime-img">
+										{% elif recent.type_of_crime == 'Theft' %}
+										<img src="{% static 'img/banners/thief.jpg' %}" class="img-fluid" alt="crime-img">
+										{% elif recent.type_of_crime == 'Selling Drugs' %}
+										<img src="{% static 'img/banners/stop-drugs.jpg' %}" class="img-fluid" alt="crime-img">
+										{% else %}
+										<img src="{% static 'img/banners/shield.jpg' %}" class="img-fluid" alt="crime-img">
+										{% endif %}
+										
+										<div>
+											<h4><a href="{% url 'crime_details' recent.case_file_no %}">{{recent.type_of_crime}} - {{recent.location}}</a></h4>
+											<i class="bi bi-clock-half"></i><time datetime="{{recent.}}">Status updated{{recent.status_updated|timesince}} ago</time>
+										</div>
+									</div>
+									{% endfor %}
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	{% endblock %}
+</body>
+</html>
