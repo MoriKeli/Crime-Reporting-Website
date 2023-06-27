@@ -5,7 +5,7 @@ from django.contrib.auth.views import LogoutView
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views import View
-from .forms import SignupForm, UpdateOfficialProfileForm
+from .forms import SignupForm, UpdateOfficialProfileForm, UpdateUserProfileForm
 
 class UsersLoginView(View):
     form_class = AuthenticationForm
@@ -36,7 +36,7 @@ class SignupView(View):
 
         return render(request, self.template_name)
     
-class UpdateOfficialsProfileView(View):
+class OfficialsProfileView(View):
     form_class = UpdateOfficialProfileForm
     template_name = 'dashboard/profile.html'
 
@@ -48,6 +48,21 @@ class UpdateOfficialsProfileView(View):
     
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST, request.FILES, instance=request.user.officialsprofile)
+
+        return render(request, self.template_name)
+
+class UsersProfileView(View):
+    form_class = UpdateUserProfileForm
+    template_name = 'dashboard/profile.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(instance=request.user)
+
+        context = {'UpdateUserForm': form}
+        return render(request, self.template_name, context)
+    
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, request.FILES, instance=request.user)
 
         return render(request, self.template_name)
 
