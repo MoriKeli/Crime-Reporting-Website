@@ -30,7 +30,7 @@ class User(AbstractUser):
             img.save(self.profile_pic.path)
 
     class Meta:
-        ordering = ['first_name', 'last_name', '-created']
+        ordering = ['first_name', 'last_name', '-edited']
 
 class OfficialsProfile(models.Model):
     id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
