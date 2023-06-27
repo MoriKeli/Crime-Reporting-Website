@@ -10,6 +10,9 @@ class User(AbstractUser):
     dob = models.DateField(null=True, blank=False, db_column='date of birth')
     age = models.PositiveIntegerField(default=0, editable=False)
     phone_no = models.CharField(max_length=14, blank=False)
+    county = models.CharField(max_length=50, blank=False)
+    location = models.CharField(max_length=70, blank=False)
+    town = models.CharField(max_length=70, blank=False)
     profile_pic = models.ImageField(upload_to='Users-Dps/', default='default.png')
     edited = models.DateTimeField(auto_now=True)
 
@@ -41,6 +44,9 @@ class OfficialsProfile(models.Model):
     county = models.CharField(max_length=50, blank=False)
     location = models.CharField(max_length=70, blank=False)
     town = models.CharField(max_length=70, blank=False)
+    phone_no_1 = models.CharField(max_length=14, blank=False)   # mobile no. of the police station
+    phone_no_2 = models.CharField(max_length=14, blank=False)
+    phone_no_3 = models.CharField(max_length=14, blank=False)
     created = models.DateTimeField(auto_now_add=True)
     edited = models.DateTimeField(auto_now=True)
 
@@ -50,20 +56,4 @@ class OfficialsProfile(models.Model):
     class Meta:
         ordering = ['official']
         verbose_name_plural = 'Officers'
-
-class UsersProfile(models.Model):
-    id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
-    client = models.OneToOneField(User, on_delete=models.CASCADE, editable=False, db_column='user')
-    county = models.CharField(max_length=50, blank=False)
-    location = models.CharField(max_length=70, blank=False)
-    town = models.CharField(max_length=70, blank=False)
-    created = models.DateTimeField(auto_now_add=True)
-    edited = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f'{self.client}'
-    
-    class Meta:
-        ordering = ['client']
-        verbose_name_plural = 'Users Profiles'
 
