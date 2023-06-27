@@ -52,7 +52,12 @@ ROOT_URLCONF = 'src.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR/'templates/',
+            BASE_DIR/'templates/accounts/',
+            BASE_DIR/'templates/dashboard/officials',
+            BASE_DIR/'templates/dashboard/users',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -114,7 +119,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = []
+STATICFILES_DIRS = [BASE_DIR, 'static']
 
 MEDIA_URL = 'media-files/'
 MEDIA_ROOT = BASE_DIR/'media/'
