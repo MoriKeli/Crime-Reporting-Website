@@ -9,7 +9,7 @@ from .forms import SignupForm, UpdateOfficialProfileForm, UpdateUserProfileForm
 
 class UsersLoginView(View):
     form_class = AuthenticationForm
-    template_name = 'dashboard/login.html'
+    template_name = 'accounts/login.html'
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
@@ -23,7 +23,7 @@ class UsersLoginView(View):
 
 class SignupView(View):
     form_class = SignupForm
-    template_name = 'dashboard/login.html'
+    template_name = 'accounts/login.html'
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
@@ -35,10 +35,12 @@ class SignupView(View):
         form = self.form_class(request.POST)
 
         return render(request, self.template_name)
-    
+
+@method_decorator(login_required, name='get')
+@method_decorator(user_passes_test(lambda user: user.is_officer is True), name='get')  
 class OfficialsProfileView(View):
     form_class = UpdateOfficialProfileForm
-    template_name = 'dashboard/profile.html'
+    template_name = 'officials/profile.html'
 
     def get(self, request, *args, **kwargs):
         form = self.form_class(instance=request.user.officialsprofile)
@@ -51,9 +53,11 @@ class OfficialsProfileView(View):
 
         return render(request, self.template_name)
 
+@method_decorator(login_required, name='get')
+@method_decorator(user_passes_test(lambda user: user.is_officer is False), name='get')  
 class UsersProfileView(View):
     form_class = UpdateUserProfileForm
-    template_name = 'dashboard/profile.html'
+    template_name = 'users/profile.html'
 
     def get(self, request, *args, **kwargs):
         form = self.form_class(instance=request.user)
@@ -67,4 +71,4 @@ class UsersProfileView(View):
         return render(request, self.template_name)
 
 class LogoutUser(LogoutView):
-    template_name = 'dashboard/logout.html'
+    template_name = 'accounts/logout.html'
