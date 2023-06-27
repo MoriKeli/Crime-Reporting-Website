@@ -79,7 +79,7 @@ class SignupForm(UserCreationForm):
         ]
 
 
-class UpdateProfile(forms.ModelForm):
+class UpdateUserProfileForm(forms.ModelForm):
     phone_no = forms.CharField(
         widget=forms.TextInput(attrs={
             'type': 'tel', 'class': 'mb-2',
