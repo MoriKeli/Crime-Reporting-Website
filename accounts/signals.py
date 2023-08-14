@@ -10,21 +10,22 @@ def generate_userID(sender, instance, **kwargs):
         instance.id = str(uuid.uuid4()).replace('-', '')[:25]
 
     try:
-        if datetime.now().strftime('%Y-%m-%d %H:%M:%S') > instance.date_joined.strftime('%Y-%m-%d %H:%M:%S'):
-            user_dob = str(instance.dob)
-            get_user_dob = datetime.strptime(user_dob, '%Y-%m-%d')
-            current_date = datetime.now()
-            user_age = current_date - get_user_dob
-            convert_user_age = int(user_age.days/365.25)
-            instance.age = convert_user_age
-            
-        else:
-            user_dob = str(instance.dob)
-            get_user_dob = datetime.strptime(user_dob, '%Y-%m-%d')
-            current_date = datetime.now()
-            user_age = current_date - get_user_dob
-            convert_user_age = int(user_age.days/365.25)
-            instance.age = convert_user_age
+        if not instance.is_superuser is True:
+            if datetime.now().strftime('%Y-%m-%d %H:%M:%S') > instance.date_joined.strftime('%Y-%m-%d %H:%M:%S'):
+                user_dob = str(instance.dob)
+                get_user_dob = datetime.strptime(user_dob, '%Y-%m-%d')
+                current_date = datetime.now()
+                user_age = current_date - get_user_dob
+                convert_user_age = int(user_age.days/365.25)
+                instance.age = convert_user_age
+                
+            else:
+                user_dob = str(instance.dob)
+                get_user_dob = datetime.strptime(user_dob, '%Y-%m-%d')
+                current_date = datetime.now()
+                user_age = current_date - get_user_dob
+                convert_user_age = int(user_age.days/365.25)
+                instance.age = convert_user_age
     
     except AttributeError:
         return
