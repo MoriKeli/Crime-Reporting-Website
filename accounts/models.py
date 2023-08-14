@@ -1,3 +1,4 @@
+from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from PIL import Image
@@ -9,11 +10,12 @@ class User(AbstractUser):
     gender = models.CharField(max_length=7, blank=False)
     dob = models.DateField(null=True, blank=False, db_column='date of birth')
     age = models.PositiveIntegerField(default=0, editable=False)
-    phone_no = models.CharField(max_length=14, blank=False)
+    mobile_no = PhoneNumberField()
     county = models.CharField(max_length=50, blank=False)
     location = models.CharField(max_length=70, blank=False)
     town = models.CharField(max_length=70, blank=False)
     profile_pic = models.ImageField(upload_to='Users-Dps/', default='default.png')
+    is_crimereporter = models.BooleanField(default=False, editable=False)
     is_officer = models.BooleanField(default=False, editable=False)
     edited = models.DateTimeField(auto_now=True)
 
@@ -36,25 +38,21 @@ class User(AbstractUser):
     class Meta:
         ordering = ['first_name', 'last_name', '-edited']
 
-class OfficialsProfile(models.Model):
+class OfficerProfile(models.Model):
     id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
-    official = models.OneToOneField(User, on_delete=models.CASCADE, editable=False)
-    bio = models.TextField(blank=False)
+    name = models.OneToOneField(User, on_delete=models.CASCADE, editable=False)
+    bio = models.TextField()
     police_post = models.CharField(max_length=70, blank=False)
     rank = models.CharField(max_length=50, blank=False)
-    county = models.CharField(max_length=50, blank=False)
-    location = models.CharField(max_length=70, blank=False)
-    town = models.CharField(max_length=70, blank=False)
-    phone_no_1 = models.CharField(max_length=14, blank=False)   # mobile no. of the police station
-    phone_no_2 = models.CharField(max_length=14, blank=False)
-    phone_no_3 = models.CharField(max_length=14, blank=False)
+    mobile_no_1 = PhoneNumberField()
+    mobile_no_2 = PhoneNumberField()
     created = models.DateTimeField(auto_now_add=True)
     edited = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.official}'
+        return f'{self.name}'
     
     class Meta:
-        ordering = ['official']
+        ordering = ['name']
         verbose_name_plural = 'Officers'
 
