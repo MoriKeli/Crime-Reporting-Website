@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
-from .models import User, OfficialsProfile, UsersProfile
+from .models import User, OfficerProfile
+from .utils import validate_is_image
 from django import forms
 
 class SignupForm(UserCreationForm):
@@ -9,67 +10,60 @@ class SignupForm(UserCreationForm):
         ('Female', 'Female')
     )
 
-    first_name = forms.CharField(
-        widget=forms.TextInput(attrs={
-                'type': 'text',
-                'class': 'mb-2',
-                'autofocus': True,
+    first_name = forms.CharField(widget=forms.TextInput(attrs={
+            'type': 'text', 'class': 'mb-2', 'autofocus': True,
         }),
     )
-    last_name = forms.CharField(
-        widget=forms.TextInput(attrs={
-                'type': 'text', 'class': 'mb-2',
+    last_name = forms.CharField(widget=forms.TextInput(attrs={
+            'type': 'text', 'class': 'mb-2',
         }),
         required=True)
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={
-                'type': 'email', 'class': 'mb-2',
+            'type': 'email', 'class': 'mb-2',
         }),
-        required=True)
-    gender = forms.ChoiceField(
-        widget=forms.Select(attrs={
-                'type': 'select', 'class': 'mb-2',
+        required=True
+    )
+    gender = forms.ChoiceField(widget=forms.Select(attrs={
+            'type': 'select', 'class': 'mb-2',
         }),
         choices=SELECT_GENDER
     )
-    dob = forms.DateField(
-        widget=forms.DateInput(attrs={
+    dob = forms.DateField(widget=forms.DateInput(attrs={
             'type': 'date', 'class': 'mb-2',
         }),
         required=True,
     )
-    phone_no = forms.CharField(
-        widget=forms.TextInput(attrs={
+    phone_no = forms.CharField(widget=forms.TextInput(attrs={
             'type': 'tel', 'class': 'mb-2',
         }),
         required=True,
     )
-    county = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'type': 'text', 'class': 'mb-2',
+    county = forms.CharField(widget=forms.TextInput(attrs={
+            'type': 'text',
         }),
         required=True,
         help_text='Enter your residential county',
     )
-    location = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'type': 'text', 'class': 'mb-2',
+    location = forms.CharField(widget=forms.TextInput(attrs={
+            'type': 'text', 'class': 'mt-2',
         }),
         required=True,
         help_text='Enter your residential location',
     )
     town = forms.CharField(
         widget=forms.TextInput(attrs={
-            'type': 'text', 'class': 'mb-2',
+            'type': 'text', 'class': 'mt-2',
         }),
         required=True,
         help_text='Enter the residential your estate/village/town.',
     )
     profile_pic = forms.FileField(
         widget=forms.FileInput(attrs={
-            'type': 'file', 'class': 'form-control mb-2', 'accept': '.jpg, .jpeg, .png',
+            'type': 'file', 'class': 'form-control mt-2 mb-2', 'accept': '.jpg, .jpeg, .png',
         }),
         required=False,
+        validators=[validate_is_image],
     )
 
     class Meta:
@@ -80,17 +74,17 @@ class SignupForm(UserCreationForm):
 
 
 class UpdateUserProfileForm(forms.ModelForm):
-    phone_no = forms.CharField(
-        widget=forms.TextInput(attrs={
+    phone_no = forms.CharField(widget=forms.TextInput(attrs={
             'type': 'tel', 'class': 'mb-2',
         }),
         required=True,
     )
     profile_pic = forms.FileField(
         widget=forms.FileInput(attrs={
-            'type': 'file', 'class': 'form-control mb-2', 'accept': '.jpg, .jpeg, .png',
+            'type': 'file', 'class': 'form-control mt-2 mb-2', 'accept': '.jpg, .jpeg, .png',
         }),
         required=False,
+        validators=[validate_is_image],
     )
 
     class Meta:
@@ -99,7 +93,7 @@ class UpdateUserProfileForm(forms.ModelForm):
             'dob', 'profile_pic',
         ]
     
-class UpdateOfficialProfileForm(forms.ModelForm):
+class UpdateOfficersProfileForm(forms.ModelForm):
     SELECT_RANK = (
         (None, '-- Select police rank --'),
         ('AP', 'Administration Police (AP)'),
@@ -108,65 +102,51 @@ class UpdateOfficialProfileForm(forms.ModelForm):
         ('Police officer', 'Police officer'),
         ('Traffic police', 'Traffic police'),
     )
-    bio = forms.CharField(
-        widget=forms.Textarea(attrs={
+    bio = forms.CharField(widget=forms.Textarea(attrs={
             'type': 'text', 'class': 'mb-2', 'placeholder': 'Type your bio here ...',
         }),
         required=False,
     )
-    police_post = forms.CharField(
-        widget=forms.TextInput(attrs={
+    police_post = forms.CharField(widget=forms.TextInput(attrs={
             'type': 'text', 'class': 'mb-2',
         }),
         required=True,
     )
-    rank = forms.ChoiceField(
-        widget=forms.Select(attrs={
+    rank = forms.ChoiceField(widget=forms.Select(attrs={
             'type': 'select', 'class': 'mb-2',
         }),
         choices=SELECT_RANK,
     )
-    county = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'type': 'text', 'class': 'mb-2',
+    county = forms.CharField(widget=forms.TextInput(attrs={
+            'type': 'text',
         }),
         required=True,
         help_text='Enter the county of your police post'
     )
-    location = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'type': 'text', 'class': 'mb-2',
+    location = forms.CharField(widget=forms.TextInput(attrs={
+            'type': 'text', 'class': 'mt-2',
         }),
         required=True,
         help_text='Enter the county of your police post'
     )
-    town = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'type': 'text', 'class': 'mb-2',
+    town = forms.CharField(widget=forms.TextInput(attrs={
+            'type': 'text', 'class': 'mt-2',
         }),
         required=True,
         help_text='Enter the estate/town/village of your police post',
     )
-    phone_no_1 = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'type': 'tel', 'class': 'mb-2',
+    phone_no_1 = forms.CharField(widget=forms.TextInput(attrs={
+            'type': 'tel', 'class': 'mt-2 mb-2',
         }),
         required=True,
     )
-    phone_no_2 = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'type': 'tel', 'class': 'mb-2',
-        }),
-        required=True,
-    )
-    phone_no_3 = forms.CharField(
-        widget=forms.TextInput(attrs={
+    phone_no_2 = forms.CharField(widget=forms.TextInput(attrs={
             'type': 'tel', 'class': 'mb-2',
         }),
         required=True,
     )
 
     class Meta:
-        model = OfficialsProfile
+        model = OfficerProfile
         fields = '__all__'
 
