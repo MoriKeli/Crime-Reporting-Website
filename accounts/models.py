@@ -15,6 +15,7 @@ class User(AbstractUser):
     location = models.CharField(max_length=70, blank=False)
     town = models.CharField(max_length=70, blank=False)
     profile_pic = models.ImageField(upload_to='Users-Dps/', default='default.png')
+    is_registered = models.BooleanField(default=False, editable=False)
     is_officer = models.BooleanField(default=False, editable=False)
     edited = models.DateTimeField(auto_now=True)
 
@@ -45,6 +46,7 @@ class OfficerProfile(models.Model):
     rank = models.CharField(max_length=50, blank=False)
     mobile_no_1 = PhoneNumberField()
     mobile_no_2 = PhoneNumberField()
+    is_registered = models.BooleanField(default=False, editable=False)
     created = models.DateTimeField(auto_now_add=True)
     edited = models.DateTimeField(auto_now=True)
 
