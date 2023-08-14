@@ -1,6 +1,6 @@
 from django.db.models.signals import pre_save
+from .models import User, OfficerProfile
 from django.dispatch import receiver
-from .models import User, OfficialsProfile, UsersProfile
 from datetime import datetime
 import uuid
 
@@ -29,12 +29,7 @@ def generate_userID(sender, instance, **kwargs):
     except AttributeError:
         return
 
-@receiver(pre_save, sender=OfficialsProfile)
+@receiver(pre_save, sender=OfficerProfile)
 def generate_officialsID(sender, instance, **kwargs):
-    if instance.id == '':
-        instance.id = str(uuid.uuid4()).replace('-', '')[:25]
-
-@receiver(pre_save, sender=UsersProfile)
-def generate_user_profileID(sender, instance, **kwargs):
     if instance.id == '':
         instance.id = str(uuid.uuid4()).replace('-', '')[:25]
