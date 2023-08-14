@@ -15,7 +15,6 @@ class User(AbstractUser):
     location = models.CharField(max_length=70, blank=False)
     town = models.CharField(max_length=70, blank=False)
     profile_pic = models.ImageField(upload_to='Users-Dps/', default='default.png')
-    is_crimereporter = models.BooleanField(default=False, editable=False)
     is_officer = models.BooleanField(default=False, editable=False)
     edited = models.DateTimeField(auto_now=True)
 
