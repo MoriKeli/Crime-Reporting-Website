@@ -4,6 +4,7 @@ django-crispy-forms==1.14.0
 django-environ==0.10.0
 django-phonenumber-field==7.1.0
 djangorestframework==3.14.0
+phonenumbers==8.13.18
 Pillow==9.5.0
 python-magic==0.4.27
 pytz==2023.3
