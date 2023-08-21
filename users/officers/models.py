@@ -50,6 +50,7 @@ class OfficerProfile(models.Model):
     
     class Meta:
         ordering = ['officer', 'police_post']
+        verbose_name_plural = 'Law enforcement officers'
 
 class SuspectsRecords(models.Model):
     id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
@@ -84,4 +85,5 @@ class SuspectsRecords(models.Model):
     
     class Meta:
         ordering = ['name', 'crime']
+        verbose_name_plural = 'Suspects records'
 
