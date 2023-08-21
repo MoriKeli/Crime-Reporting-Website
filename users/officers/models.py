@@ -49,4 +49,38 @@ class OfficerProfile(models.Model):
     
     class Meta:
         ordering = ['officer', 'police_post']
+
+class SuspectsRecords(models.Model):
+    id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
+    name = models.CharField(max_length=70, blank=False)
+    alias = models.CharField(max_length=30, blank=False)
+    gender = models.CharField(max_length=7, blank=False)
+    county_origin = models.CharField(max_length=50, blank=False)
+    subcounty_origin = models.CharField(max_length=80, blank=False)
+    constituency_origin = models.CharField(max_length=80, blank=False)
+    location_origin = models.CharField(max_length=80, blank=False)
+    suspect_dp = models.ImageField(upload_to='Suspects/Images/', default='default.png')
+    bounty = models.PositiveIntegerField(default=0, blank=True)
+    crime = models.CharField(max_length=50, blank=False)
+    status = models.CharField(max_length=20, blank=False)
+    last_seen_county = models.CharField(max_length=50, blank=True)
+    last_seen_location = models.CharField(max_length=80, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    edited = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
     
+    def save(self, *args, **kwargs):
+        super(SuspectsRecords, self).save(*args, **kwargs)
+
+        img_file = Image.open(self.suspect_dp.path)
+
+        if img_file.height > 480 and img_file.width > 640:
+            output_size = (480, 640)
+            img_file.thumbnail(output_size)
+            img_file.save(self.suspect_dp.path)
+    
+    class Meta:
+        ordering = ['name', 'crime']
+
