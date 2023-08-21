@@ -3,7 +3,7 @@ from accounts.models import User
 from django.db import models
 from PIL import Image
 
-class PolicePost(models.Model):
+class PolicePosts(models.Model):
     id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
     name = models.CharField(max_length=100, blank=False, unique=True)   # name of the police station
     mobile_no = PhoneNumberField(db_column='Mobile No. 1')
@@ -34,11 +34,12 @@ class PolicePost(models.Model):
 
     class Meta:
         ordering = ['county', 'name']
+        verbose_name_plural = 'Police stations'
 
 class OfficerProfile(models.Model):
     id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
     officer = models.OneToOneField(User, on_delete=models.CASCADE, editable=False)
-    police_post = models.ForeignKey(PolicePost, on_delete=models.CASCADE, editable=False)
+    police_post = models.ForeignKey(PolicePosts, on_delete=models.CASCADE, editable=False)
     bio = models.TextField()
     rank = models.CharField(max_length=50, blank=False)
     created = models.DateTimeField(auto_now_add=True)
