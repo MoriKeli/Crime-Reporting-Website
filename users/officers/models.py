@@ -1,6 +1,7 @@
 from phonenumber_field.modelfields import PhoneNumberField
 from accounts.models import User
 from django.db import models
+from PIL import Image
 
 class PolicePost(models.Model):
     id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
@@ -20,6 +21,16 @@ class PolicePost(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):
+        super(PolicePost, self).save(*args, **kwargs)
+
+        img = Image.open(self.img_file.path)
+
+        if img.height > 500 and img.width > 500:
+            output_size = (500, 500)
+            img.thumbnail(output_size)
+            img.save(self.img_file.path)
 
     class Meta:
         ordering = ['county', 'name']
