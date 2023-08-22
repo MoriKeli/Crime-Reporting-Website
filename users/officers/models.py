@@ -23,7 +23,7 @@ class PolicePosts(models.Model):
         return self.name
     
     def save(self, *args, **kwargs):
-        super(PolicePost, self).save(*args, **kwargs)
+        super(PolicePosts, self).save(*args, **kwargs)
 
         img = Image.open(self.img_file.path)
 
