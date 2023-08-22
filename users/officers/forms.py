@@ -1,27 +1,7 @@
-from .models import PolicePosts, OfficerProfile, SuspectsRecords
+from .models import PolicePosts, SuspectsRecords
 from .utils import validate_is_image
 from django import forms
 
-class UpdateOfficerProfileForm(forms.ModelForm):
-    SELECT_RANK = (
-        (None, '-- Select your rank --'),
-        ('AP', 'Administration Police'),
-        ('Chief', 'Chief'),
-        ('Detective', 'Detective'),
-        ('Sergeant', 'Sergeant'),
-    )
-    bio = forms.CharField(widget=forms.Textarea(attrs={
-        'type': 'text', 'class': 'mb-2',
-    }))
-    rank = forms.ChoiceField(widget=forms.Select(attrs={
-        'type': 'select', 'class': 'mb-2',
-        }),
-        choices=SELECT_RANK,
-    )
-
-    class Meta:
-        model = OfficerProfile
-        fields = '__all__'
 
 class FileSuspectsForm(forms.ModelForm):
     SELECT_GENDER = (
