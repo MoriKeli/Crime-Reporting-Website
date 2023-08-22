@@ -36,22 +36,6 @@ class PolicePosts(models.Model):
         ordering = ['county', 'name']
         verbose_name_plural = 'Police stations'
 
-class OfficerProfile(models.Model):
-    id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
-    officer = models.OneToOneField(User, on_delete=models.CASCADE, editable=False)
-    police_post = models.ForeignKey(PolicePosts, on_delete=models.CASCADE, editable=False)
-    bio = models.TextField()
-    rank = models.CharField(max_length=50, blank=False)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f'{self.officer}'
-    
-    class Meta:
-        ordering = ['officer', 'police_post']
-        verbose_name_plural = 'Law enforcement officers'
-
 class SuspectsRecords(models.Model):
     id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
     name = models.CharField(max_length=70, blank=False)
