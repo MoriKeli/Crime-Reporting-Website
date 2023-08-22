@@ -1,5 +1,6 @@
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import AbstractUser
+from users.officers.models import PolicePosts
 from django.db import models
 from PIL import Image
 
