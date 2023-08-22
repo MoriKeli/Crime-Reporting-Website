@@ -23,8 +23,8 @@ class ReportedSuspectsView(View):
         if form.is_valid():
             form.save()
 
-            messages.info(request, 'Form successfully submitted!')
-            return redirect('')
+            messages.info(request, 'Suspect record successfully created!')
+            return redirect('new_suspect')
         
         return render(request, self.template_name)
 
