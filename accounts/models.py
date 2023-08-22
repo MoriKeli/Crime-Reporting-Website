@@ -40,20 +40,18 @@ class User(AbstractUser):
 
 class OfficerProfile(models.Model):
     id = models.CharField(max_length=25, primary_key=True, unique=True, editable=False)
-    name = models.OneToOneField(User, on_delete=models.CASCADE, editable=False)
+    officer = models.OneToOneField(User, on_delete=models.CASCADE, editable=False)
+    police_post = models.ForeignKey(PolicePosts, on_delete=models.CASCADE, editable=False)
     bio = models.TextField()
-    police_post = models.CharField(max_length=70, blank=False)
     rank = models.CharField(max_length=50, blank=False)
-    mobile_no_1 = PhoneNumberField()
-    mobile_no_2 = PhoneNumberField()
     is_registered = models.BooleanField(default=False, editable=False)
     created = models.DateTimeField(auto_now_add=True)
-    edited = models.DateTimeField(auto_now=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.officer}'
     
     class Meta:
-        ordering = ['name']
-        verbose_name_plural = 'Officers'
+        ordering = ['officer', 'police_post']
+        verbose_name_plural = 'Law enforcement officers'
 
