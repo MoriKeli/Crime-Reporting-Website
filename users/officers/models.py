@@ -15,7 +15,7 @@ class PolicePosts(models.Model):
     longitude = models.FloatField(null=True, blank=False)
     latitude = models.FloatField(null=True, blank=False)
     address = models.CharField(max_length=30, blank=False)
-    img_file = models.ImageField(upload_to='Stations/', default='')
+    img_file = models.ImageField(upload_to='Stations/', default='station.png')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
