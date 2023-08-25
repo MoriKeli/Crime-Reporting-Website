@@ -50,7 +50,7 @@ class UsersLoginView(View):
 
 class SignupView(View):
     form_class = SignupForm
-    template_name = 'accounts/login.html'
+    template_name = 'accounts/signup.html'
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
@@ -68,7 +68,7 @@ class SignupView(View):
 
         return render(request, self.template_name)
 
-@method_decorator(login_required, name='get')
+@method_decorator(login_required(login_url='login'), name='get')
 @method_decorator(user_passes_test(lambda user: user.is_officer is True), name='get')  
 class OfficialsProfileView(View):
     form_class = UpdateOfficersProfileForm
@@ -94,7 +94,7 @@ class OfficialsProfileView(View):
 
         return render(request, self.template_name)
 
-@method_decorator(login_required, name='get')
+@method_decorator(login_required(login_url='login'), name='get')
 @method_decorator(user_passes_test(lambda user: user.is_officer is False), name='get')  
 class UsersProfileView(View):
     form_class = UpdateUserProfileForm
