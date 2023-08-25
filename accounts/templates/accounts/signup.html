@@ -26,14 +26,13 @@
 										<div class="row">
 											<div class="col-12">
 												{% include 'messages.html' %}
-												{{ SignupForm|crispy }}
+												{{ SignupForm|crispy }}<hr class="mb-2">
 											</div>
 										</div>
-										<div class="col-12 mt-3">
+										<div class="col-12">
 											<button class="btn btn-success w-100" type="submit">Sign Up</button>
 										</div>
-										<div class="col-12">
-											<hr class="dropdown-divider">
+										<div class="col-12 mt-2">
 											<p class="small mb-0 text-center">
 												Already have account? Click here to <a href="{% url 'login' %}">login</a>
 											</p>
