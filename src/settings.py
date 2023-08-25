@@ -57,7 +57,7 @@ TEMPLATES = [
         'DIRS': [
             BASE_DIR/'templates/',
             BASE_DIR/'templates/accounts/',
-            BASE_DIR/'templates/dashboard/officials',
+            BASE_DIR/'templates/dashboard/officers',
             BASE_DIR/'templates/dashboard/users',
         ],
         'APP_DIRS': True,
