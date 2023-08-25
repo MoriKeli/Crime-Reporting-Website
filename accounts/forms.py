@@ -34,7 +34,7 @@ class SignupForm(UserCreationForm):
         }),
         required=True,
     )
-    phone_no = forms.CharField(widget=forms.TextInput(attrs={
+    mobile_no = forms.CharField(widget=forms.TextInput(attrs={
             'type': 'tel', 'class': 'mb-2',
         }),
         required=True,
@@ -46,30 +46,23 @@ class SignupForm(UserCreationForm):
         help_text='Enter your residential county',
     )
     location = forms.CharField(widget=forms.TextInput(attrs={
-            'type': 'text', 'class': 'mt-2',
+            'type': 'text',
         }),
         required=True,
         help_text='Enter your residential location',
     )
-    town = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'type': 'text', 'class': 'mt-2',
+    town = forms.CharField(widget=forms.TextInput(attrs={
+            'type': 'text',
         }),
         required=True,
         help_text='Enter the residential your estate/village/town.',
-    )
-    profile_pic = forms.FileField(
-        widget=forms.FileInput(attrs={
-            'type': 'file', 'class': 'form-control mt-2 mb-2', 'accept': '.jpg, .jpeg, .png',
-        }),
-        required=False,
-        validators=[validate_is_image],
     )
 
     class Meta:
         model = User
         fields = [
-            'first_name', 'last_name', 'username', 'email', 'dob', 'phone_no', 'profile_pic',
+            'first_name', 'last_name', 'username', 'email', 'gender', 'dob', 'mobile_no', 'county',
+            'location', 'town', 'password1', 'password2',
         ]
 
 
