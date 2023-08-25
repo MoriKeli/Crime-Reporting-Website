@@ -1,5 +1,4 @@
 from phonenumber_field.modelfields import PhoneNumberField
-from accounts.models import User
 from django.db import models
 from PIL import Image
 
