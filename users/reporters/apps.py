@@ -3,7 +3,7 @@ from django.apps import AppConfig
 
 class ReportersConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'reporters'
+    name = 'users.reporters'
 
     def ready(self):
         import users.reporters.signals
