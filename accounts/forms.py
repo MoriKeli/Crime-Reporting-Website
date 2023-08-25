@@ -34,7 +34,7 @@ class SignupForm(UserCreationForm):
         }),
         required=True,
     )
-    phone_no = forms.CharField(widget=forms.TextInput(attrs={
+    mobile_no = forms.CharField(widget=forms.TextInput(attrs={
             'type': 'tel', 'class': 'mb-2',
         }),
         required=True,
@@ -46,30 +46,23 @@ class SignupForm(UserCreationForm):
         help_text='Enter your residential county',
     )
     location = forms.CharField(widget=forms.TextInput(attrs={
-            'type': 'text', 'class': 'mt-2',
+            'type': 'text',
         }),
         required=True,
         help_text='Enter your residential location',
     )
-    town = forms.CharField(
-        widget=forms.TextInput(attrs={
-            'type': 'text', 'class': 'mt-2',
+    town = forms.CharField(widget=forms.TextInput(attrs={
+            'type': 'text',
         }),
         required=True,
         help_text='Enter the residential your estate/village/town.',
-    )
-    profile_pic = forms.FileField(
-        widget=forms.FileInput(attrs={
-            'type': 'file', 'class': 'form-control mt-2 mb-2', 'accept': '.jpg, .jpeg, .png',
-        }),
-        required=False,
-        validators=[validate_is_image],
     )
 
     class Meta:
         model = User
         fields = [
-            'first_name', 'last_name', 'username', 'email', 'dob', 'phone_no', 'profile_pic',
+            'first_name', 'last_name', 'username', 'email', 'gender', 'dob', 'mobile_no', 'county',
+            'location', 'town', 'password1', 'password2',
         ]
 
 
@@ -100,7 +93,6 @@ class UpdateOfficersProfileForm(forms.ModelForm):
         ('Chief', 'Chief'),
         ('Detective', 'Detective'),
         ('Police officer', 'Police officer'),
-        ('Traffic police', 'Traffic police'),
     )
     bio = forms.CharField(widget=forms.Textarea(attrs={
             'type': 'text', 'class': 'mb-2', 'placeholder': 'Type your bio here ...',
@@ -117,35 +109,7 @@ class UpdateOfficersProfileForm(forms.ModelForm):
         }),
         choices=SELECT_RANK,
     )
-    county = forms.CharField(widget=forms.TextInput(attrs={
-            'type': 'text',
-        }),
-        required=True,
-        help_text='Enter the county of your police post'
-    )
-    location = forms.CharField(widget=forms.TextInput(attrs={
-            'type': 'text', 'class': 'mt-2',
-        }),
-        required=True,
-        help_text='Enter the county of your police post'
-    )
-    town = forms.CharField(widget=forms.TextInput(attrs={
-            'type': 'text', 'class': 'mt-2',
-        }),
-        required=True,
-        help_text='Enter the estate/town/village of your police post',
-    )
-    phone_no_1 = forms.CharField(widget=forms.TextInput(attrs={
-            'type': 'tel', 'class': 'mt-2 mb-2',
-        }),
-        required=True,
-    )
-    phone_no_2 = forms.CharField(widget=forms.TextInput(attrs={
-            'type': 'tel', 'class': 'mb-2',
-        }),
-        required=True,
-    )
-
+    
     class Meta:
         model = OfficerProfile
         fields = '__all__'

@@ -28,29 +28,30 @@ class UsersLoginView(View):
             user_account = authenticate(username=username, password=password)
 
             if user_account is not None:
-                if user_account.officerprofile.is_registered is True:      # check if the user is a registered officer
-                    if user_account.is_officer is True:
+                if user_account.is_officer is False:
+                    if user_account.is_registered:  # if the user (normal user) is registered, redirect to homepage.
+                            return redirect('homepage')
+                        
+                    else:   # redirect to user's profile page if user (normal user) is not registered.
                         login(request, user_account)
-                        return redirect('dashboard')
+                        return redirect('user_profile')
+                    
                 else:
                     # if the officer is not registered redirect to officer profile page
                     if user_account.is_officer is False and user_account.officerprofile.is_registered is False:
                         login(request, user_account)
                         return redirect('officials_profile')
                     
-                    elif user_account.is_officer is False:   # check if the user is a normal user.
-                        if user_account.is_registered:  # if the user (normal user) is registered, redirect to homepage.
-                            return redirect('homepage')
-                        
-                        else:   # redirect to user's profile page if user (normal user) is not registered.
+                    if user_account.officerprofile.is_registered is True:      # check if the user is a registered officer
+                        if user_account.is_officer is True:
                             login(request, user_account)
-                            return redirect('user_profile')
+                            return redirect('dashboard')
 
         return render(request, self.template_name)
 
 class SignupView(View):
     form_class = SignupForm
-    template_name = 'accounts/login.html'
+    template_name = 'accounts/signup.html'
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
@@ -68,7 +69,7 @@ class SignupView(View):
 
         return render(request, self.template_name)
 
-@method_decorator(login_required, name='get')
+@method_decorator(login_required(login_url='login'), name='get')
 @method_decorator(user_passes_test(lambda user: user.is_officer is True), name='get')  
 class OfficialsProfileView(View):
     form_class = UpdateOfficersProfileForm
@@ -94,7 +95,7 @@ class OfficialsProfileView(View):
 
         return render(request, self.template_name)
 
-@method_decorator(login_required, name='get')
+@method_decorator(login_required(login_url='login'), name='get')
 @method_decorator(user_passes_test(lambda user: user.is_officer is False), name='get')  
 class UsersProfileView(View):
     form_class = UpdateUserProfileForm
