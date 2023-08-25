@@ -39,6 +39,21 @@ class SignupForm(UserCreationForm):
         }),
         required=True,
     )
+
+    class Meta:
+        model = User
+        fields = [
+            'first_name', 'last_name', 'username', 'email', 'gender',
+            'dob', 'mobile_no', 'password1', 'password2',
+        ]
+
+
+class UpdateUserProfileForm(forms.ModelForm):
+    phone_no = forms.CharField(widget=forms.TextInput(attrs={
+            'type': 'tel', 'class': 'mb-2',
+        }),
+        required=True,
+    )
     county = forms.CharField(widget=forms.TextInput(attrs={
             'type': 'text',
         }),
@@ -57,21 +72,6 @@ class SignupForm(UserCreationForm):
         required=True,
         help_text='Enter the residential your estate/village/town.',
     )
-
-    class Meta:
-        model = User
-        fields = [
-            'first_name', 'last_name', 'username', 'email', 'gender', 'dob', 'mobile_no', 'county',
-            'location', 'town', 'password1', 'password2',
-        ]
-
-
-class UpdateUserProfileForm(forms.ModelForm):
-    phone_no = forms.CharField(widget=forms.TextInput(attrs={
-            'type': 'tel', 'class': 'mb-2',
-        }),
-        required=True,
-    )
     profile_pic = forms.FileField(
         widget=forms.FileInput(attrs={
             'type': 'file', 'class': 'form-control mt-2 mb-2', 'accept': '.jpg, .jpeg, .png',
@@ -83,7 +83,7 @@ class UpdateUserProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = [
-            'dob', 'profile_pic',
+            'dob', 'county', 'location', 'town', 'profile_pic',
         ]
     
 class UpdateOfficersProfileForm(forms.ModelForm):
